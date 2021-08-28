@@ -25,7 +25,8 @@
       "@module/*": ["src/app/modules/*"],
       "@util/*": ["src/app/utils/*"],
       "@decorator/*": ["src/app/decorators/*"],
-      "@interceptor/*": ["src/app/interceptors/*"]
+      "@interceptor/*": ["src/app/interceptors/*"],
+      "@middleware/*": ["src/app/middlewares/*"]
     }
   }
 }

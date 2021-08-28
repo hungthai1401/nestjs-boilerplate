@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import appConfig from '@config/app.config';
 import databaseConfig from '@config/database.config';
@@ -7,6 +7,7 @@ import { DatabaseModule } from '@database/database.module';
 import { ValidatorModule } from '@validator/validator.module';
 import { UserModule } from '@module/user/user.module';
 import { AuthModule } from '@module/auth/auth.module';
+import { ResponseMiddleware } from '@middleware/response.middleware';
 
 @Module({
   imports: [
@@ -20,4 +21,8 @@ import { AuthModule } from '@module/auth/auth.module';
     AuthModule,
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer): void {
+    consumer.apply(ResponseMiddleware).forRoutes('/');
+  }
+}
