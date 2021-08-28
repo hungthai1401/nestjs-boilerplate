@@ -1,7 +1,14 @@
 import { Auth } from '@decorator/auth.decorator';
 import { User } from '@entity/user.entity';
-import { Controller, Get, Post, Req, Res, UseGuards } from '@nestjs/common';
-import { ok } from '@util/response.util';
+import {
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { plainToClass } from 'class-transformer';
 import { AuthService } from './auth.service';
 import { JwtGuard } from './guards/jwt.guard';
@@ -14,6 +21,7 @@ export class AuthController {
 
   @Post('login')
   @UseGuards(LocalGuard)
+  @HttpCode(HttpStatus.OK)
   async login(@Req() req: Request) {
     return {
       accessToken: await this.service.generateAccessToken(req.user),
@@ -22,13 +30,11 @@ export class AuthController {
 
   @Get('me')
   @UseGuards(JwtGuard)
-  async me(@Auth() auth: User, @Res() res) {
+  async me(@Auth() auth: User) {
     const user = plainToClass(User, await this.service.findById(auth.id));
-    return res.json(
-      ok({
-        user,
-        auth,
-      }),
-    );
+    return {
+      user,
+      auth,
+    };
   }
 }

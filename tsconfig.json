@@ -24,7 +24,8 @@
       "@entity/*": ["src/app/entities/*"],
       "@module/*": ["src/app/modules/*"],
       "@util/*": ["src/app/utils/*"],
-      "@decorator/*": ["src/app/decorators/*"]
+      "@decorator/*": ["src/app/decorators/*"],
+      "@interceptor/*": ["src/app/interceptors/*"]
     }
   }
 }
